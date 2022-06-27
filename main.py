@@ -44,20 +44,20 @@ def getMethod():
         }
 
     return jsonify(response), 400
-
-@app.route('/users/<user_id>', methods=['GET'])
+#specific user
+@app.route('/user/<user_id>', methods=['GET'])
 def get_user(user_id):
     response = {}
     try:
         for user in users:
             if user.get("id") == user_id:
                 print(user.get("email"))
-            print(user.get("firstName"))
-            response = {
-                "firstName": user.get("firstname"),
-                "email": user.get("email"),
-                "id": user.get("id")
-            }
+                print(user.get("firstName"))
+                response = {
+                    "firstName": user.get("firstname"),
+                    "email": user.get("email"),
+                    "id": user.get("id")
+                }
         return jsonify(response), 200
     except:
         response = {
@@ -95,7 +95,6 @@ def update_user(user_id):
             "message": "Some error occurred",
             "status": False
         }
-
     return jsonify(response), 404
 
 
