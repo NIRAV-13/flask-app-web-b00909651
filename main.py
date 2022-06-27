@@ -59,7 +59,7 @@ def update_user(user_id):
                     "message": "User updated",
                     "status": True
                 }
-                print(users)
+                
                 return jsonify(response), 200 
         response = {
             "message": "User not found!",
@@ -71,6 +71,7 @@ def update_user(user_id):
             "message": "Some error occurred",
             "status": False 
         }        
+    
     return jsonify(response), 404
 
 @app.route("/add", methods=["POST"])
