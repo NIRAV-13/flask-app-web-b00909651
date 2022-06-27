@@ -100,7 +100,7 @@ def update_user(user_id):
             "message": "Some error occurred",
             "status": False 
         }        
-    
+    #print(nothing)
     return jsonify(response), 400
 
 @app.route("/add", methods=["POST"])
