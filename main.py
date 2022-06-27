@@ -50,22 +50,13 @@ def get_user(user_id):
     try:
         for user in users:
             if user.get("id") == user_id:
-                print(user.get("email")) 
-                print(user.get("firstName"))
+                print(user.get("id"))
                 response = {
                     "firstName": user.get("firstname"),
                     "email": user.get("email"),
                     "id": user.get("id")
                 }
                 return jsonify(response), 200 
-            else:
-                 response={
-                    "message": "User Not Exist",
-                    "status": False 
-                }
-            return jsonify(response), 404
-
-        
     except:
         response={
              "message": "Some error occurred",
