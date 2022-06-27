@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath app tutorial5-web-flask.wsgi
+gunicorn main.wsgi --log-file
