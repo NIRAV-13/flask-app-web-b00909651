@@ -51,8 +51,9 @@ def get_user(user_id):
         for user in users:
             if user.get("id") == user_id:
                 print(user.get("id"))
+                print(user_id)
                 response = {
-                    "firstName": user.get("firstname"),
+                    "firstname": user.get("firstname"),
                     "email": user.get("email"),
                     "id": user.get("id")
                 }
@@ -101,7 +102,7 @@ def add_user():
         flag = False
         new_user = {
             "email": request_data.get("email"),
-            "firstName": request_data.get("firstName"),
+            "firstname": request_data.get("firstname"),
             "id": "".join([random.choice(string.ascii_letters) for i in range(5)])
         }
     
