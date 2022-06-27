@@ -24,7 +24,7 @@ users = [
         "id": "123aasv"
     }
 ]
-#q
+
 app.env = "development"
 data = json.dumps({})
 @app.route('/users',methods=['GET'])
