@@ -12,8 +12,6 @@ class User:
         self.email = email
         self.id = id
 
-listOfuser = []
-
 users = [
     {
         "firstName": "Nirav",
