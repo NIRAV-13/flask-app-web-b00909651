@@ -1,12 +1,13 @@
 from os import abort
 import string
-from flask import Flask, json, request , jsonify
+from flask import Flask, json, request, jsonify
 import json
 import random
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this_is_my_secret_key'
+
 class User:
-    def __init__(self,username,email,id):
+    def __init__(self, username, email, id):
         self.username = username
         self.email = email
         self.id = id
@@ -16,56 +17,57 @@ users = [
         "firstname": "Nirav",
         "email": "nirav@gmail.com",
         "id": "dsd232"
-    }, 
+    },
     {
         "firstname": "Meet",
         "email": "Meet@gmail.com",
         "id": "123aasv"
     }
 ]
-
 app.env = "development"
 data = json.dumps({})
-@app.route('/users',methods=['GET'])
+
+@app.route('/users', methods=['GET'])
 def getMethod():
     try:
         response_data = {
-            "message" : "Users Retrived",
-            "success" : True,
-            "users"  :  users
+            "message": "Users Retrived",
+            "success": True,
+            "users":  users
         }
-     
+
         return jsonify(response_data), 200
     except:
         response = {
             "message": "Some error occurred",
-            "status": False 
-        }        
-    
-    return jsonify(response), 400
+            "status": False
+        }
 
-@app.route('/user/<user_id>', methods = ['GET'])
+    return jsonify(response), 400
+#specific user
+@app.route('/user/<user_id>', methods=['GET'])
 def get_user(user_id):
     response = {}
     try:
         for user in users:
             if user.get("id") == user_id:
-                print(user.get("id"))
-                print(user_id)
+                print(user.get("email"))
+                print(user.get("firstname"))
                 response = {
                     "firstname": user.get("firstname"),
                     "email": user.get("email"),
                     "id": user.get("id")
                 }
-                return jsonify(response), 200 
+        return jsonify(response), 200
     except:
-        response={
-             "message": "Some error occurred",
-            "status": False 
+        response = {
+            "message": "Some error occurred",
+            "status": False
         }
-        return jsonify(response) ,400
-        
-@app.route("/update/<user_id>", methods = ["PUT"])
+        return jsonify(response), 400
+
+
+@app.route("/update/<user_id>", methods=["PUT"])
 def update_user(user_id):
     response = {}
     try:
@@ -81,19 +83,20 @@ def update_user(user_id):
                     "message": "User updated",
                     "status": True
                 }
-                return jsonify(response), 200 
+
+                return jsonify(response), 200
         response = {
             "message": "User not found!",
             "status": False
         }
-        return jsonify(response), 404
+        return jsonify(response), 400
     except:
         response = {
             "message": "Some error occurred",
-            "status": False 
-        }        
-    #print(nothing)
-    return jsonify(response), 400
+            "status": False
+        }
+    return jsonify(response), 404
+
 
 @app.route("/add", methods=["POST"])
 def add_user():
@@ -105,40 +108,35 @@ def add_user():
             "firstname": request_data.get("firstname"),
             "id": "".join([random.choice(string.ascii_letters) for i in range(5)])
         }
-    
+
         for user in users:
-            if  user.get("email") == new_user.get("email"):
+            if user.get("email") == new_user.get("email"):
                 flag = True
                 break
-        if not flag :
+        if not flag:
             print(new_user.get("email"))
             print(user.get("email"))
             print("Have")
             users.append(new_user)
             response = {
                 "message": "User Added",
-                "status": True 
-            }     
+                "status": True
+            }
             return jsonify(response), 201
         else:
             response = {
                 "message": "User already exist ",
-                "status": False 
-            }  
-            return response, 404
-        
+                "status": False
+            }
+            return response, 409
+
     except:
-          response = {
+        response = {
             "message": "Some error occurred",
-            "status": False 
-        }        
-    return jsonify(response) , 500
-    
-    
-    
+            "status": False
+        }
+    return jsonify(response), 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
- 
